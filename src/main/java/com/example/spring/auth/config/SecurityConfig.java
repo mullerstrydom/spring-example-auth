@@ -1,13 +1,10 @@
 package com.example.spring.auth.config;
 
-import java.util.Iterator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -23,22 +20,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests( auth -> auth
+                        .requestMatchers("/test").hasRole("ADMIN")
                         .anyRequest().authenticated())                          // all requests need to be authenticated
-//                .httpBasic(Customizer.withDefaults())
-                .formLogin( form -> form
-                        .loginPage("/login.html")  // redirects unauthenticated traffic to here
-                        .permitAll())
-                .logout( logout -> logout
-                        .logoutSuccessUrl("/home")
-                        .permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
     @Bean
     public UserDetailsManager userDetailsManager(PasswordEncoder passwordEncoder) {
         UserDetails user1 = User.withUsername("user").password(passwordEncoder.encode("userpass")).roles("USER").build();
-        return new InMemoryUserDetailsManager(user1);
+        UserDetails user2 = User.withUsername("adminuser").password(passwordEncoder.encode("adminpass")).roles("ADMIN").build();
+        return new InMemoryUserDetailsManager(user1, user2);
     }
 
 //    @Bean  // alternative for InMemoryUserDetailsManager

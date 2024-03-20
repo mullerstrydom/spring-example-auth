@@ -1,11 +1,13 @@
-### Access the actuator without authentication
+### Access the actuator
 GET http://localhost:8080/actuator
 Authorization: basic user userpass
 
 
 ### Access MyController
-POST http://localhost:8080/login.html
-Content-Type: application/x-www-form-urlencoded
+GET http://localhost:8080/test
+Authorization: basic user userpass
+#Authorization: basic adminuser adminpass
 
-username=user&password=userpass
 
+# user cant access /test
+# but admin user can acccess /test because of the ADMIN role
