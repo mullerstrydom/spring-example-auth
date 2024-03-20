@@ -1,6 +1,8 @@
 ### Access the actuator without authentication
 GET http://localhost:8080/actuator
+Authorization: basic user userpass
 
 
 ### Access MyController
 GET http://localhost:8080/test
+Authorization: basic user userpass
