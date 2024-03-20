@@ -1,0 +1,6 @@
+### Access the actuator without authentication
+GET http://localhost:8080/actuator
+
+
+### Access MyController
+GET http://localhost:8080/test
