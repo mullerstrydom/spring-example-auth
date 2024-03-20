@@ -1,10 +1,13 @@
 package com.example.spring.auth.config;
 
+import java.util.Iterator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -20,8 +23,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests( auth -> auth
-                        .anyRequest().authenticated())  // all requests need to be authenticated
-                .httpBasic(Customizer.withDefaults())
+                        .anyRequest().authenticated())                          // all requests need to be authenticated
+//                .httpBasic(Customizer.withDefaults())
+                .formLogin( form -> form
+                        .loginPage("/login.html")  // redirects unauthenticated traffic to here
+                        .permitAll())
+                .logout( logout -> logout
+                        .logoutSuccessUrl("/home")
+                        .permitAll())
+                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 

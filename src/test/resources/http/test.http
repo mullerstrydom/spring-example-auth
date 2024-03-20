@@ -4,5 +4,8 @@ Authorization: basic user userpass
 
 
 ### Access MyController
-GET http://localhost:8080/test
-Authorization: basic user userpass
+POST http://localhost:8080/login.html
+Content-Type: application/x-www-form-urlencoded
+
+username=user&password=userpass
+
