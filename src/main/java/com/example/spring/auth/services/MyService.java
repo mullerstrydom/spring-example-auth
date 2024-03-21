@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyService {
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String getTestContent() {
         return "Hello World from service";
     }
