@@ -8,6 +8,6 @@ GET http://localhost:8080/test
 Authorization: basic user userpass
 #Authorization: basic adminuser adminpass
 
-
-# user cant access /test
-# but admin user can acccess /test because of the ADMIN role
+# both users get a http 403 error
+#   user - MyController only allow users with ADMIN role
+#   adminuser - MyService only allow users with USER ROLE
